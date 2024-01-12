@@ -13,34 +13,36 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="posts")
+@Table(name = "posts")
 public class Post {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	private String caption;
-	
+
 	private String image;
-	
+
 	private String video;
-	
+
 	@ManyToOne
 	private User user;
-	
+
 	@OneToMany
 	private List<User> liked = new ArrayList<>();
-	
+
 	private LocalDateTime createdAt;
-	
+
+	@OneToMany
+	private List<Comment> comments = new ArrayList<>();
+
 	public Post() {
-		
+
 	}
-	
 
 	public Post(Integer id, String caption, String image, String video, User user, List<User> liked,
-			LocalDateTime createdAt) {
+			LocalDateTime createdAt, List<Comment> comments) {
 		super();
 		this.id = id;
 		this.caption = caption;
@@ -49,8 +51,8 @@ public class Post {
 		this.user = user;
 		this.liked = liked;
 		this.createdAt = createdAt;
+		this.comments = comments;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -96,11 +98,9 @@ public class Post {
 		return liked;
 	}
 
-
 	public void setLiked(List<User> liked) {
 		this.liked = liked;
 	}
-
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -109,8 +109,13 @@ public class Post {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-	
-	
-	
-	
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 }
